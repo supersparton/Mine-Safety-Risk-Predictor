@@ -7,18 +7,6 @@ An AI-powered machine learning system that predicts workplace accident severity 
 ![Streamlit](https://img.shields.io/badge/Streamlit-1.29-red)
 ![scikit-learn](https://img.shields.io/badge/scikit--learn-1.3-orange)
 
-## 📋 Table of Contents
-- [Overview](#overview)
-- [Features](#features)
-- [Dataset](#dataset)
-- [Models](#models)
-- [Installation](#installation)
-- [Usage](#usage)
-- [Project Structure](#project-structure)
-- [Technologies Used](#technologies-used)
-- [Results](#results)
-- [Contributing](#contributing)
-- [License](#license)
 
 ## 🎯 Overview
 
@@ -123,61 +111,17 @@ scipy>=1.11.0
 
 ## 💻 Usage
 
-### Running the Jupyter Notebook
-1. Open the notebook:
-```bash
-jupyter notebook msha_safety_analysis_optimized.ipynb
-```
-
-2. Run all cells sequentially to:
-   - Load and explore the data
-   - Preprocess features
-   - Train models
-   - Evaluate performance
-   - Generate visualizations
-
-### Running the Streamlit App
-1. Start the web application:
-```bash
-streamlit run app.py
-```
-
-2. Open your browser at `http://localhost:8501`
-
-3. Enter accident details in the form:
+1. Enter accident details in the form:
    - Mine information (Mine ID, Operator ID, Type)
    - Worker experience (Total, Mine-specific, Job-specific)
    - Accident details (Type, Classification, Occupation Code)
 
-4. Click **"🔮 Predict Risk & Lost Workdays"** to get:
+2 Click **"🔮 Predict Risk & Lost Workdays"** to get:
    - Predicted injury severity with confidence
    - Estimated lost workdays
    - Risk assessment (Low/Moderate/High)
    - Personalized safety recommendations
 
-## 📁 Project Structure
-
-```
-ml-project/
-│
-├── msha_accidents.csv                          # Dataset (200K+ records)
-├── msha_safety_analysis_optimized.ipynb        # Main analysis notebook
-├── app.py                                      # Streamlit web application
-├── requirements.txt                            # Python dependencies
-├── README.md                                   # Project documentation
-│
-├── Models/
-│   ├── xgboost_injury_classifier.pkl          # Classification model
-│   ├── xgboost_days_lost_regressor.pkl        # Regression model
-│   ├── degree_injury_encoder.pkl              # Label encoder
-│   ├── feature_preprocessor.pkl               # Preprocessing pipeline
-│   ├── advanced_regression_model.pkl          # Enhanced regression model
-│   ├── best_regression_model_enhanced.pkl     # Optimized regression model
-│   └── preprocessor_enhanced.pkl              # Enhanced preprocessor
-│
-└── Documentation/
-    └── R2_IMPROVEMENT_GUIDE.md                # Model optimization guide
-```
 
 ## 🛠️ Technologies Used
 
@@ -237,22 +181,7 @@ Contributions are welcome! Please follow these steps:
 5. Open a Pull Request
 
 
-## 🙏 Acknowledgments
 
-- **MSHA (Mine Safety and Health Administration)** for providing comprehensive accident data
-- **XGBoost Team** for the powerful gradient boosting library
-- **Streamlit** for the intuitive web framework
-- **scikit-learn** for comprehensive ML tools
-- **Adani University** for project guidance and support
-
-## 📞 Contact
-
-For questions, feedback, or collaboration opportunities, please reach out through:
-- GitHub Issues
-- Email: [Your Email]
-- LinkedIn: [Your LinkedIn]
-
----
 
 <div align="center">
   
