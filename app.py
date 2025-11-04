@@ -157,10 +157,11 @@ with tab1:
         days_restrict = st.number_input("Days of Restricted Work", 
                                          min_value=0, max_value=365, value=0, step=1,
                                          help="Days with restricted work activity")
-        schedule_charge_text = st.selectbox("Schedule Charge", ["YES", "NO"],
-                                             help="Whether schedule charge applies",
-                                             index=1)
-        schedule_charge = 1 if schedule_charge_text == "YES" else 0
+        # Time of accident (used for cyclical temporal features)
+        st.markdown("##### ⏰ Accident Timing")
+        from datetime import date
+        accident_date = st.date_input("Accident Date", value=date.today(), help="Select the accident date")
+        accident_hour = st.slider("Accident Hour (0–23)", min_value=0, max_value=23, value=12, help="24-hour format")
     
     st.markdown("---")
     
@@ -168,9 +169,10 @@ with tab1:
     if st.button("🔮 Predict Risk & Lost Workdays", type="primary"):
         if classifier is not None and regressor is not None:
             # Prepare input data with all required features
-            # Use current date/time for temporal features
-            from datetime import datetime
-            now = datetime.now()
+            # Use provided date/time for temporal features
+            # Compute month and day-of-week from accident_date
+            month = accident_date.month
+            day_of_week = accident_date.weekday()  # Mon=0 .. Sun=6
             
             # Calculate experience level (numeric encoding)
             if tot_exper < 1:
@@ -182,15 +184,13 @@ with tab1:
             else:
                 experience_level = 3  # Expert
             
-            # Calculate cyclical time features
-            hour = now.hour
-            day = now.day
-            month = now.month
+            # Calculate cyclical time features (hour, day-of-week, month)
+            hour = int(accident_hour)
             
             hour_sin = np.sin(2 * np.pi * hour / 24)
             hour_cos = np.cos(2 * np.pi * hour / 24)
-            day_sin = np.sin(2 * np.pi * day / 31)
-            day_cos = np.cos(2 * np.pi * day / 31)
+            day_sin = np.sin(2 * np.pi * day_of_week / 7)
+            day_cos = np.cos(2 * np.pi * day_of_week / 7)
             month_sin = np.sin(2 * np.pi * month / 12)
             month_cos = np.cos(2 * np.pi * month / 12)
             
@@ -207,7 +207,9 @@ with tab1:
                 'CLASSIFICATION': classification,
                 'COAL_METAL_IND': coal_metal_ind,
                 'DAYS_RESTRICT': days_restrict,
-                'SCHEDULE_CHARGE': schedule_charge,
+                # 'SCHEDULE_CHARGE' intentionally not collected in UI to avoid leakage.
+                # Kept as 0 for backward compatibility if the preprocessor expects this column.
+                'SCHEDULE_CHARGE': 0,
                 'Experience_Level': experience_level,
                 'Hour_Sin': hour_sin,
                 'Hour_Cos': hour_cos,
